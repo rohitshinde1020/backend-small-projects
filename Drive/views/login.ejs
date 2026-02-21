@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+
+</head>
+
+<body class=" w-screen h-screen bg-gray-600 p-10 text-white flex flex-col justify-center items-center gap-10  ">
+    
+    <div
+        class="border-2 border-black shadow-lg shadow-white p-10 rounded-lg flex flex-col justify-center items-center gap-10">
+        <div>
+            <h1 class="text-2xl mb-10">Welcome Back, Login</h1>
+        </div>
+        <div>
+            <form action="/login" method="post" class="text-white flex flex-col gap-5 w-96">
+                <input type="text" placeholder="Enter username"
+                    class="px-2 py-3 outline-none rounded-lg border-2 bg-transparent" name="username">
+                <input type="password" placeholder="Enter password"
+                    class="px-2 py-3 outline-none rounded-lg border-2 bg-transparent " name="password">
+                <input type="submit" class="px-6 py-3 bg-blue-500 outline-none cursor:pointer rounded-lg "
+                    value="Login Account">
+            </form>
+        </div>
+        <p>Don't have an account? <a href="/signup" class="text-blue">Sign Up</a></p>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+</body>
+
+</html>

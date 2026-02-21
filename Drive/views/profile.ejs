@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+
+</head>
+
+<body class="">
+    <a href="/logout" class="absolute top-5 right-5 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transform transition-transform duration-300 hover:-translate-y-1 hover:scale-110">Logout</a>
+    <!-- //crete a logout a tag having position at top right corner of the screen having red bg which is good visible having text color white and hover effect use tailwing for styleing
+     hover should make it change it position a bit having animation and scle up
+     -->
+    <div class="min-h-screen bg-gray-300 flex ">
+        <div class="w-full max-w-lg bg-white rounded-xl shadow-md p-6">
+
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+                Create a Post
+            </h2>
+            <form action="/posts" method="post">
+                <textarea name="content" rows="5" placeholder="What's on your mind?"
+                    class="w-full resize-none rounded-lg border border-gray-300 p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required></textarea>
+
+                <div class="flex justify-end mt-4">
+                    <button type="submit"
+                        class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                        Post
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <div class="w-full  mx-auto py-5 px-10 mt-8 space-y-6">
+
+                <div class="space-y-4 w-full ">
+                    <h1 class="text-zinc-800 text-xl w-full"> Your posts</h1>
+                    <% if (user.posts.length===0) { %>
+                        <p class="text-gray-500">No posts yet.</p>
+                        <% } %>
+
+                            <% user.posts.reverse().forEach(post=> { %>
+                                <div class="bg-white border rounded-lg p-4 shadow-sm w-[400px]">
+
+                                    <p class="text-blue-600 mb-2">
+                                        #<%= user.username %>
+                                    </p>
+
+                                    <p class=" mt-2">
+                                        <%= post.content %>
+                                    </p>
+                                    <small class="text-sm block-inline">
+                                        <%= post.likes.length %> likes
+                                    </small>
+                                    <div>
+                                        <a href="/like/<%=post._id%>" class="text-blue-600 font-semibold mr-[10px]">
+                                            <%= post.likes.indexOf(user._id)===-1 ? "like" :"unlike" %>
+                                        </a>
+                                        <a href="/edit/<%=post._id%>" class="text-black font-bold">edit</a>
+                                    </div>
+
+                                </div>
+                                <% }) %>
+                </div>
+
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+</body>
+
+</html>
