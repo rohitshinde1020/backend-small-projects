@@ -8,11 +8,24 @@ const connectdb = require("./config/db.js");
 dotenv.config();
 const router=require("./routers/main-router.js");
 const userrouter=require("./routers/user-router.js");
-const allowedOrigins = ['https://authentication-system-yoa2.onrender.com'];
+
+const allowedOrigins = [
+  "https://authentication-system-yoa2.onrender.com"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors({credentials:true , origin: allowedOrigins}));
 connectdb();
 
 const PORT = process.env.PORT || 4000 ;
