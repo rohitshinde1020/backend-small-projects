@@ -8,7 +8,7 @@ const connectdb = require("./config/db.js");
 dotenv.config();
 const router=require("./routers/main-router.js");
 const userrouter=require("./routers/user-router.js");
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = ['https://authentication-system-yoa2.onrender.com'];
 
 app.use(cookieParser());
 app.use(express.json());
