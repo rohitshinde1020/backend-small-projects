@@ -18,6 +18,9 @@ const register = async (req, res) => {
     if (!name || !email || !password) {
         return res.status(400).json({ success: false, message: "All fields are required" });
     }
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD || !process.env.SENDER) {
+        return res.status(500).json({ success: false, message: "Email service is not configured" });
+    }
     try {
         const existinguser = await User.findOne({ email: email });
         if (existinguser) {
@@ -48,7 +51,11 @@ const register = async (req, res) => {
             text: `Hello ${newuser.name},\n\nWelcome to AuthMern! We're excited to have you on board.\n\nBest regards,\nThe AuthMern Team`
         };
 
-        await transporter.sendMail(option);
+        try {
+            await transporter.sendMail(option);
+        } catch (mailErr) {
+            console.error("register mail error:", mailErr.message);
+        }
 
         res.status(201).json({ success: true, message: "User registered successfully" });
 
@@ -119,6 +126,9 @@ const verify_otp_sent = async (req, res) => {
         if (!userId) {
             return res.status(400).json({ success: false, message: "User id is required" });
         }
+        if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD || !process.env.SENDER) {
+            return res.status(500).json({ success: false, message: "Email service is not configured" });
+        }
         const user = await User.findById(userId);
 
         if (!user) {
@@ -142,12 +152,21 @@ const verify_otp_sent = async (req, res) => {
             text: `Your OTP is ${otp}. Your account can be verified using this OTP.`
         };
 
-        await transporter.sendMail(option);
+        try {
+            await transporter.sendMail(option);
+        } catch (mailErr) {
+            user.verifyotp = "";
+            user.verifyotpexpiry = 0;
+            await user.save();
+            console.error("verify_otp_sent mail error:", mailErr.message);
+            return res.status(502).json({ success: false, message: "Failed to send verification OTP email" });
+        }
 
         res.json({ success: true, message: "verification OTP sent on receiver email address" })
 
     }
     catch (error) {
+        console.error("verify_otp_sent error:", error.message);
         res.status(500).json({ success: false, message: "Operation failed" })
     }
 }
