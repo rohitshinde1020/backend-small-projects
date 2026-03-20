@@ -37,7 +37,7 @@ const textmessagecontroller = async (req, res) => {
             ispublished: false,
         });
 
-
+        // Calling AI provider using OpenAI compatible SDK.
         const { choices } = await openai.chat.completions.create({
             model: "gemini-2.5-flash",
             messages: [
@@ -49,6 +49,10 @@ const textmessagecontroller = async (req, res) => {
         });
 
         const providerMessage = choices?.[0]?.message;
+
+        // Some AI APIs return:["part1","part2"]
+        // Instead of single string.
+        // This code converts array → string.
         const replyContent = Array.isArray(providerMessage?.content)
             ? providerMessage.content
                 .map((part) => typeof part === "string" ? part : part?.text || "")

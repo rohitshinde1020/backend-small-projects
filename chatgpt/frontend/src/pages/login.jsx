@@ -3,6 +3,14 @@ import { Appcontext } from '../context/Appcontext'
 import toast from "react-hot-toast";
 
 const Login = () => {
+  const [state, setState] = useState("login");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { axios: appAxios, settoken, setuser, navigate } = useContext(Appcontext);
+
+
   const handlesubmit = async (e) => {
     e.preventDefault();
 
@@ -35,15 +43,6 @@ const Login = () => {
     }
   }
 
-  const [state, setState] = useState("login");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { axios: appAxios, settoken, setuser, navigate } = useContext(Appcontext);
-
-
-  
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 px-4 py-8">
       {/* Background decorative elements */}
