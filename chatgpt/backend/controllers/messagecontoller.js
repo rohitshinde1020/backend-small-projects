@@ -172,11 +172,11 @@ const imagemessagecontroller = async (req, res) => {
             ispublished: shouldPublish,
         };
 
-        res.status(200).json({ success: true, message: "Image generated and uploaded successfully", reply });
         chat.messages.push(reply);
         await chat.save();
-
         await User.updateOne({_id:userId},{$inc:{credits:-1}});
+
+        res.status(200).json({ success: true, message: "Image generated and uploaded successfully", reply });
         
 
     }

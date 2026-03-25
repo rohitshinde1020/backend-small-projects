@@ -8,13 +8,13 @@ const registeruser = async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-        return res.status(201).json({ success: false, message: "All fields are required" });
+        return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
     try {
         const isuser = await User.findOne({ email: email });
         if (isuser) {
-            return res.status(201).json({ success: false, message: "User already exists" });
+            return res.status(400).json({ success: false, message: "User already exists" });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -60,18 +60,18 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        return res.status(201).json({ success: false, message: "All fields are required" });
+        return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
     try {
         const foundUser = await User.findOne({ email: email });
         if (!foundUser) {
-            return res.status(201).json({ success: false, message: "Invalid credentials" });
+            return res.status(400).json({ success: false, message: "Invalid credentials" });
         }
 
         const ispasswordcorrect = await bcrypt.compare(password, foundUser.password);
         if (!ispasswordcorrect) {
-            return res.status(201).json({ success: false, message: "Invalid credentials" });
+            return res.status(400).json({ success: false, message: "Invalid credentials" });
         }
 
         const token = jwt.sign(

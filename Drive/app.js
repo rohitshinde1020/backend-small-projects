@@ -18,5 +18,5 @@ app.use(cookieparser());
 app.use('/',router)
 
 app.listen(port,()=>{
-    console.log(`server is sunning at port ${port}`)
+    console.log(`server is running at port ${port}`)
 })
