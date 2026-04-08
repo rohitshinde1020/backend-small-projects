@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const transporter = require('../config/nodemailer');
 const { getRedis } = require('../config/redis');
-const MAX_LOGIN_ATTEMPTS = 5;
-const LOGIN_BLOCK_SECONDS = 15 * 60;
-const SESSION_TTL_SECONDS = 24 * 60 * 60;
+const MAX_LOGIN_ATTEMPTS = parseInt(process.env.MAX_LOGIN_ATTEMPTS, 10) || 5;
+const LOGIN_BLOCK_SECONDS = parseInt(process.env.LOGIN_BLOCK_SECONDS, 10) || 15 * 60;
+const SESSION_TTL_SECONDS = parseInt(process.env.SESSION_TTL_SECONDS, 10) || 24 * 60 * 60;
 const crypto = require('crypto');
 
 const cookieOptions = {
